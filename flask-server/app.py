@@ -3,9 +3,14 @@ import datetime
 from werkzeug.security import check_password_hash, generate_password_hash
 from pymongo import MongoClient
 from email_validator import validate_email, EmailNotValidError
+from decouple import config
+
+key = config('key',default='')
+password = config('password',default='')
+url = f"mongodb+srv://quinn_griff:{password}@cluster0.std9b.mongodb.net/purlbot?retryWrites=true&w=majority"
 
 app = Flask("__app__")
-app.config.update(SECRET_KEY='5590F734-9571-475E-A38A-D22785370C95')
+app.config.update(SECRET_KEY=key)
 app.config['SESSION_TYPE'] = 'filesystem'
 
 # Ensure templates are auto-reloaded
@@ -21,7 +26,7 @@ app.config["TEMPLATES_AUTO_RELOAD"] = True
 
 
 # connect to MongoDB and define tables
-cluster = MongoClient("mongodb+srv://quinn_griff:aa5Owj2CNYBYroAd@cluster0.std9b.mongodb.net/purlbot?retryWrites=true&w=majority")
+cluster = MongoClient(url)
 db=cluster["purlbot"]
 users=db["users"]
 patterns=db["patterns"]
@@ -49,7 +54,6 @@ def userCheck(name):
     matches = users.find({"userName": name})
     for match in matches:
         temp.append(match)
-        print(temp)
     return temp
 
 
@@ -95,7 +99,6 @@ def register():
             cleanedEmail = validate_email(email).email
         except EmailNotValidError as e:
             # email is not valid, exception message is human-readable
-            print(str(e))
             return oops(e)
         if len(name) < 3:
             return oops("Please enter a username of at least 3 characters.")
@@ -129,7 +132,6 @@ def login():
 
         # Query database for username
         results = userCheck(name)
-        print(results)
 
         # Ensure username exists and password is correct
         if len(results) != 1 or not check_password_hash(results[0]["password"], password):
