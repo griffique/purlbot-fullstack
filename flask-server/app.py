@@ -1,4 +1,5 @@
-from flask import (Flask,redirect, render_template, request, session)
+from flask import (Flask,redirect, render_template, request, send_from_directory, session)
+from flask_restful import Resource, Api, reqparse
 import datetime
 from werkzeug.security import check_password_hash, generate_password_hash
 from pymongo import MongoClient
@@ -9,7 +10,8 @@ key = config('key',default='')
 password = config('password',default='')
 url = f"mongodb+srv://quinn_griff:{password}@cluster0.std9b.mongodb.net/purlbot?retryWrites=true&w=majority"
 
-app = Flask("__app__")
+app = Flask("__app__", static_url_path='', static_folder='build')
+api = Api(app)
 app.config.update(SECRET_KEY=key)
 app.config['SESSION_TYPE'] = 'filesystem'
 
@@ -20,9 +22,12 @@ app.config["TEMPLATES_AUTO_RELOAD"] = True
 # register for site (X)
 # login with credentials (X)
 # logout (X)
+# api endpoint for pattern retrieval (X)
+# api endpoint for pattern save (X)
+# frontend design for save/retrieve
 # serve react app from flask
-# save pattern-- frontend react
-# retrieve patterns from saved pattern area
+# save pattern fn
+# retrieve patterns fn
 
 
 # connect to MongoDB and define tables
@@ -31,18 +36,10 @@ db=cluster["purlbot"]
 users=db["users"]
 patterns=db["patterns"]
 
-# count users and make id
-def userId():
-    count = 0
-    allUsers = users.find({})
-    for user in allUsers:
-        count +=1
-    return count + 1
 
 # add a new user
 def addUser(userName, password, email):
     users.insert_one({
-        "_id": userId(),
         "userName": userName,
         "password" : password,
         "email" : email
@@ -58,20 +55,48 @@ def userCheck(name):
 
 
 # add a new pattern - must be added to the front end with API
-def addPattern(id, userId, gauge, type, nickname):
-    today = datetime.datetime.now()
+def addPattern(gauge, type, nickname):
     patterns.insert_one ({
-        "_id" : id,
-        "userId": userId,
+        "userId": session["user_id"],
         "gauge" : gauge,
         "type" : type,
         "nickname" : nickname,
-        "date" : today
     })
 
-@app.route("/")
-def my_index():
-    return render_template('index.html')
+#api setup for pattern CRUD
+class Patterns(Resource):
+    # methods go here
+    def get(pattern):
+        temp = []
+        matches = patterns.find({"userId": session["user_id"]})
+        for savedPattern in matches:
+            temp.append({
+                "gauge": savedPattern["gauge"],
+                "type": savedPattern["type"],
+                "nickname": savedPattern["nickname"],
+            })
+        print(temp)
+        return temp
+    def post(pattern):
+        parser = reqparse.RequestParser()  # initialize parser
+
+        parser.add_argument('gauge', required=True)  # add args
+        parser.add_argument('type', required=True)
+        parser.add_argument('nickname', required=True)
+        
+        args = parser.parse_args()  # parse arguments to dictionary
+
+        addPattern(args['gauge'], args['type'], args['nickname'])
+        return args, 200
+
+api.add_resource(Patterns, '/patterns')
+
+
+@app.route("/", defaults={'path':''})
+# def my_index():
+def serve(path):
+    return send_from_directory(app.static_folder,'index.html')
+    # return render_template('index.html')
 
 @app.route("/logout")
 def logout():
