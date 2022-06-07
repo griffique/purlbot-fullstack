@@ -5,24 +5,41 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+    <link rel="stylesheet" href="/template-styles.css" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap"
+      rel="stylesheet"
+    />
     <title>Register</title>
 </head>
 <body>
-    <form action="/register" method="post">
-        <h1 class="mb-4">Register</h1>
-        <div class="mb-3">
-            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="username" name="username" placeholder="Enter a username" type="text">
+    <div class="columns is-centered">
+        <div class="column is-one-third">
+            <div class="box mt-6 p-6 has-text-centered">
+                <form action="/register" method="post">
+                    <h1 class="has-text-weight-bold">Register for</h1>
+                    <h1 class="mb-4"><span class="purl-title">Purl</span><span class="bot-title">Bot</span></h1>
+                    <div class="mb-3">
+                        <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="username" name="username" placeholder="Enter a username" type="text">
+                    </div>
+                    <div class="mb-3">
+                        <input class="form-control mx-auto w-auto" id="password" name="password" placeholder="Enter a password" type="password">
+                    </div>
+                    <div class="mb-3">
+                        <input class="form-control mx-auto w-auto" id="confirmation" name="confirmation" placeholder="Re-enter password" type="password">
+                    </div>
+                    <div class="mb-6">
+                        <input class="form-control mx-auto w-auto" id="email" name="email" placeholder="Enter email" type="text">
+                    </div>
+                    <button class="button is-primary" type="submit">Submit</button>
+                </form>
+            </div>
         </div>
-        <div class="mb-3">
-            <input class="form-control mx-auto w-auto" id="password" name="password" placeholder="Enter a password" type="password">
-        </div>
-        <div class="mb-3">
-            <input class="form-control mx-auto w-auto" id="confirmation" name="confirmation" placeholder="Re-Enter password" type="password">
-        </div>
-        <div class="mb-3">
-            <input class="form-control mx-auto w-auto" id="email" name="email" placeholder="Enter email" type="text">
-        </div>
-        <button class="btn btn-primary" type="submit">Submit</button>
-    </form>
+    </div>
 </body>
 </html>
