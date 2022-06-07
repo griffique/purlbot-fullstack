@@ -57,7 +57,7 @@ def userCheck(name):
 # add a new pattern - must be added to the front end with API
 def addPattern(gauge, type, nickname):
     patterns.insert_one ({
-        "userId": session["user_id"],
+        "userId": session["user_email"],
         "gauge" : gauge,
         "type" : type,
         "nickname" : nickname,
@@ -68,7 +68,7 @@ class Patterns(Resource):
     # methods go here
     def get(pattern):
         temp = []
-        matches = patterns.find({"userId": session["user_id"]})
+        matches = patterns.find({"userId": session["user_email"]})
         for savedPattern in matches:
             temp.append({
                 "gauge": savedPattern["gauge"],
@@ -163,7 +163,7 @@ def login():
             return oops("Invalid username and/or password")
         else:
             # Remember which user has logged in
-            session["user_id"] = results[0]["_id"]
+            session["user_email"] = results[0]["email"]
             # Redirect user to home page
             return redirect("/")
     else:
