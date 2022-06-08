@@ -3,6 +3,7 @@ body, html {
     font-family: "Share Tech Mono", monospace;
     font-size: 20px;
     height: 100%;
+    width: 100%;
 }
 
 .bot-title {
@@ -17,3 +18,14 @@ body, html {
     font-size: 64px;
     font-family: 'Pacifico', cursive;
 }
+
+/*CSS media queries*/
+@media only screen and (max-width: 600px) {
+    .box {
+        max-width: 80%;
+    }
+    .bot-title, .purl-title {
+        font-size: 32px;
+    }
+  }
+  

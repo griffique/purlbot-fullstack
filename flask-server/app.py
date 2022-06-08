@@ -38,17 +38,16 @@ patterns=db["patterns"]
 
 
 # add a new user
-def addUser(userName, password, email):
+def addUser(password, email):
     users.insert_one({
-        "userName": userName,
         "password" : password,
         "email" : email
     })
 
 # check for existing user
-def userCheck(name):
+def userCheck(email):
     temp = []
-    matches = users.find({"userName": name})
+    matches = users.find({"email": email})
     for match in matches:
         temp.append(match)
     return temp
@@ -112,7 +111,6 @@ def oops(message):
 @app.route("/register", methods=["GET", "POST"])
 def register():
     if request.method == "POST":
-        name = request.form.get("username")
         password = request.form.get("password")
         confirmation = request.form.get("confirmation")
         email = request.form.get("email")
@@ -125,18 +123,16 @@ def register():
         except EmailNotValidError as e:
             # email is not valid, exception message is human-readable
             return oops(e)
-        if len(name) < 3:
-            return oops("Please enter a username of at least 3 characters.")
-        elif len(password) < 3:
+        if len(password) < 3:
             return oops("Please enter a password of at least 3 characters.")
         elif password != confirmation:
             return oops("Passwords do not match.")
         else:
-            if len(userCheck(name)) > 0:
-                return oops("Username already exists.")
+            if len(userCheck(email)) > 0:
+                return oops("Email already exists.")
             else:
                 hash = generate_password_hash(password)
-                addUser(name, hash, email)
+                addUser(hash, email)
                 return redirect('/login')
     else:
         return render_template("register.html")
@@ -144,23 +140,23 @@ def register():
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
-        # Ensure username was submitted
-        name = request.form.get("username")
+        # Ensure email was submitted
+        email = request.form.get("email")
         password = request.form.get("password")
         
-        if not name:
-            return oops("Must provide username")
+        if not email:
+            return oops("Must provide email")
 
         # Ensure password was submitted
         elif not password:
             return oops("Must provide password")
 
-        # Query database for username
-        results = userCheck(name)
+        # Query database for email
+        results = userCheck(email)
 
-        # Ensure username exists and password is correct
+        # Ensure email exists and password is correct
         if len(results) != 1 or not check_password_hash(results[0]["password"], password):
-            return oops("Invalid username and/or password")
+            return oops("Invalid email and/or password")
         else:
             # Remember which user has logged in
             session["user_email"] = results[0]["email"]

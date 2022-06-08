@@ -18,28 +18,21 @@
     <title>Register</title>
 </head>
 <body>
-    <div class="columns is-centered">
-        <div class="column is-one-third">
-            <div class="box mt-6 p-6 has-text-centered">
-                <form action="/register" method="post">
-                    <h1 class="has-text-weight-bold">Register for</h1>
-                    <h1 class="mb-4"><span class="purl-title">Purl</span><span class="bot-title">Bot</span></h1>
-                    <div class="mb-3">
-                        <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="username" name="username" placeholder="Enter a username" type="text">
-                    </div>
-                    <div class="mb-3">
-                        <input class="form-control mx-auto w-auto" id="password" name="password" placeholder="Enter a password" type="password">
-                    </div>
-                    <div class="mb-3">
-                        <input class="form-control mx-auto w-auto" id="confirmation" name="confirmation" placeholder="Re-enter password" type="password">
-                    </div>
-                    <div class="mb-6">
-                        <input class="form-control mx-auto w-auto" id="email" name="email" placeholder="Enter email" type="text">
-                    </div>
-                    <button class="button is-primary" type="submit">Submit</button>
-                </form>
+    <div class="box mt-6 p-6 has-text-centered">
+        <form action="/register" method="post">
+            <h1 class="has-text-weight-bold">Register for</h1>
+            <h1 class="mb-4"><span class="purl-title">Purl</span><span class="bot-title">Bot</span></h1>
+            <div class="mb-3">
+                <input class="form-control mx-auto w-auto" id="email" name="email" placeholder="Enter email" type="text">
             </div>
-        </div>
+            <div class="mb-3">
+                <input class="form-control mx-auto w-auto" id="password" name="password" placeholder="Enter a password" type="password">
+            </div>
+            <div class="mb-6">
+                <input class="form-control mx-auto w-auto" id="confirmation" name="confirmation" placeholder="Re-enter password" type="password">
+            </div>
+            <button class="button is-primary" type="submit">Submit</button>
+        </form>
     </div>
 </body>
 </html>

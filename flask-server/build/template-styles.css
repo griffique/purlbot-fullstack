@@ -1,10 +1,23 @@
+a:link {
+    color: #7209b7;
+    text-decoration: none;
+  }
+a:hover {
+    text-decoration: underline;
+    color: #f72585;
+  }
+a:visited {
+    color: #3a0ca3;
+  }
+
 body, html {
-    background-color: blueviolet;
+    background: linear-gradient(135deg,rgba(114,9,183,1) 0%, rgba(58,12,163,1) 150%);
     font-family: "Share Tech Mono", monospace;
     font-size: 20px;
-    font-weight: bold;
     height: 100%;
+    width: 100%;
 }
+
 .bot-title {
     color: #7209B7;
     font-size: 64px;
@@ -12,8 +25,25 @@ body, html {
     font-weight: bold;
 }
 
+.box {
+    margin: 25px auto;
+    max-width: 50%;
+}
+
 .purl-title {
     color: #3A0CA3;
     font-size: 64px;
     font-family: 'Pacifico', cursive;
 }
+
+/*CSS media queries*/
+@media only screen and (max-width: 600px) {
+    .box {
+        margin: 20px auto;
+        max-width: 80%;
+    }
+    .bot-title, .purl-title {
+        font-size: 32px;
+    }
+  }
+  
