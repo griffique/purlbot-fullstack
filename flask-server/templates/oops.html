@@ -1,15 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Oops</title>
-</head>
-<body>
-    <div style="display:flex; justify-content:center; align-items:center; flex-direction:column;">
-        <img style="border-radius:6px; margin-top:15vh;" alt="Error 400. Sorry, we dropped a stitch. Please try your request again." class="border img-fluid" src="/images/400.png" title="404">
-        <p style="font-size:24px; font-family: 'Courier New', Courier, monospace; margin-top:50px; font-weight:bold; color:#33A98B;">{{error}}</p>
+{% extends "layout.html" %}
+
+{% block title %}
+    Oops
+{% endblock %}
+
+{% block main %}
+    <div class="message-container">
+        <img alt="Error 400. Sorry, we dropped a stitch. Please try your request again." class="border img-fluid" src="/images/400.png" title="400">
+        <p class="message-text">{{error}}</p>
     </div>
-</body>
-</html>
+{% endblock %}

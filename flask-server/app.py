@@ -104,9 +104,21 @@ def logout():
     # Redirect user to login form
     return redirect("/login")
 
+@app.route("/account")
+def account():
+    return render_template('account.html')
+
+@app.route("/reset")
+def reset():
+    return render_template('reset.html')
+
 @app.route("/oops")
 def oops(message):
     return render_template('oops.html', error=message)
+
+@app.route("/success")
+def success():
+    return render_template('success.html')
 
 @app.route("/register", methods=["GET", "POST"])
 def register():

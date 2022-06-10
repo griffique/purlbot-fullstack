@@ -11,11 +11,26 @@ a:visited {
   }
 
 body, html {
-    background: linear-gradient(135deg,rgba(114,9,183,1) 0%, rgba(58,12,163,1) 150%);
+    background: linear-gradient(135deg,rgba(114,9,183,1) 0%, rgba(58,12,163,1) 120%);
+    background-attachment: fixed; 
     font-family: "Share Tech Mono", monospace;
     font-size: 20px;
     height: 100%;
     width: 100%;
+}
+
+input {
+    max-width: 80% !important;
+}
+
+navbar li {
+    margin: 24px;
+}
+
+navbar ul {
+    display: flex;
+    flex-direction: row;
+    list-style: none;
 }
 
 .bot-title {
@@ -28,6 +43,39 @@ body, html {
 .box {
     margin: 25px auto;
     max-width: 50%;
+}
+
+.button-area {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 80%;
+    margin: 0 auto 50px;
+}
+
+.guest-link {
+    font-size: 16px;
+}
+
+.message-text {
+    color:white;
+    padding: 32px;
+}
+
+.message-container {
+    margin: 0 auto;
+    text-align: center;
+}
+
+.message-container img {
+    border-radius: 6px;
+    margin-top: 50px;
+    max-height: 60vh;
+}
+
+.nav {
+    background-color: white !important; 
 }
 
 .purl-title {

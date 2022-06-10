@@ -1,36 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" type="image/png" href="/favicon.png"/>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
-    <link rel="stylesheet" href="/template-styles.css" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap"
-      rel="stylesheet"
-    />
-    <title>Login</title>
-</head>
-    <body>
-        <div class="box mt-6 p-4 has-text-centered">
-            <h1 class="mb-4 mt-4"><span class="purl-title">Purl</span><span class="bot-title">Bot</span></h1>
-            <form action="/login" method="post" class="form">
-                <div class="mb-3">
-                    <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="email" name="email" placeholder="Email" type="text">
-                </div>
-                <div class="mb-6">
-                    <input class="form-control mx-auto w-auto" id="password" name="password" placeholder="Password" type="password">
-                </div>
-                <button class="mb-4 button is-success" type="submit">Log In</button>
-            </form>
-            <a class="guest-link" href="/">Proceed As Guest</a>
+{% extends "layout.html" %}
+
+{% block title %}
+    Log In
+{% endblock %}
+
+{% block main %}
+<div class="box mt-6 p-4 has-text-centered">
+    <h1 class="mb-4 mt-4"><span class="purl-title">Purl</span><span class="bot-title">Bot</span></h1>
+    <form action="/login" method="post" class="form">
+        <div class="mb-3">
+            <input autocomplete="off" autofocus class="input form-control mx-auto w-auto" id="email" name="email" placeholder="Email" type="text">
         </div>
-    </body>
-</html>
+        <div class="mb-4">
+            <input class="input form-control mx-auto w-auto" id="password" name="password" placeholder="Password" type="password">
+        </div>
+        <div class="button-area">
+            <button class="button is-success" type="submit">Log In</button>
+            <a class="reset">Forgot Password?</a>
+        </div>
+    </form>
+    <a class="guest-link" href="/">Proceed As Guest</a>
+</div>
+{% endblock %}
