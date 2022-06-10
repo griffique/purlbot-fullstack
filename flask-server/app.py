@@ -108,6 +108,10 @@ def logout():
 def account():
     return render_template('account.html')
 
+@app.route("/forgot")
+def forgot():
+    return render_template('forgot.html')
+
 @app.route("/reset")
 def reset():
     return render_template('reset.html')
@@ -123,9 +127,9 @@ def success():
 @app.route("/register", methods=["GET", "POST"])
 def register():
     if request.method == "POST":
-        password = request.form.get("password")
-        confirmation = request.form.get("confirmation")
-        email = request.form.get("email")
+        password = request.form.get("register-password")
+        confirmation = request.form.get("register-confirmation")
+        email = request.form.get("register-email")
         try:
             # Validate & take the normalized form of the email
             # address for all logic beyond this point (especially
@@ -141,7 +145,7 @@ def register():
             return oops("Passwords do not match.")
         else:
             if len(userCheck(email)) > 0:
-                return oops("Email already exists.")
+                return oops("Email already exists. Return to login to reset your password if necessary.")
             else:
                 hash = generate_password_hash(password)
                 addUser(hash, email)
@@ -153,8 +157,8 @@ def register():
 def login():
     if request.method == "POST":
         # Ensure email was submitted
-        email = request.form.get("email")
-        password = request.form.get("password")
+        email = request.form.get("login-email")
+        password = request.form.get("login-password")
         
         if not email:
             return oops("Must provide email")
