@@ -28,6 +28,7 @@ navbar li {
 }
 
 navbar ul {
+    align-items: center;
     display: flex;
     flex-direction: row;
     list-style: none;
@@ -40,7 +41,15 @@ navbar ul {
     font-weight: bold;
 }
 
+.bot-title-small {
+    color: #7209B7;
+    font-size: 24px;
+    font-family: 'Share Tech Mono', monospace;
+    font-weight: bold;
+}
+
 .box {
+    background-color: rgba(255, 255, 255, 0.9);
     margin: 25px auto;
     max-width: 50%;
 }
@@ -51,11 +60,15 @@ navbar ul {
     align-items: center;
     justify-content: space-between;
     max-width: 80%;
-    margin: 0 auto 50px;
+    margin: 0 auto 24px;
 }
 
 .guest-link {
     font-size: 16px;
+}
+
+.logo-link:hover {
+    text-decoration: none;
 }
 
 .message-text {
@@ -76,11 +89,18 @@ navbar ul {
 
 .nav {
     background-color: white !important; 
+    margin-bottom: 100px;
 }
 
 .purl-title {
     color: #3A0CA3;
     font-size: 64px;
+    font-family: 'Pacifico', cursive;
+}
+
+.purl-title-small {
+    color: #3A0CA3;
+    font-size: 24px;
     font-family: 'Pacifico', cursive;
 }
 
