@@ -7,21 +7,24 @@
 {% block main %}
 <div class="box mt-6 p-4 has-text-centered">
     <h1 class="mb-4 mt-4"><span class="purl-title">Purl</span><span class="bot-title">Bot</span></h1>
-    <form action="/account" method="put" class="form">
+    <form action="/account" method="post" class="form">
         <div class="mb-3">
-            <input autocomplete="off" autofocus class="input form-control mx-auto w-auto" id="account-email" name="account-email" placeholder="Edit Email" type="text">
+            <input autocomplete="off" autofocus class="input form-control mx-auto w-auto" id="account-email" name="account-email" value={{userEmail}} type="text">
         </div>
         <div class="mb-4">
-            <input class="input form-control mx-auto w-auto" id="account-password" name="account-password" placeholder="New Password" type="password">
+            <input class="input form-control mx-auto w-auto" id="account-password" name="account-password" placeholder="Current Password" type="password">
+        </div>
+        <div class="mb-4">
+            <input class="input form-control mx-auto w-auto" id="account-new-password" name="account-new-password" placeholder="New Password" type="password">
         </div>
         <div class="mb-4">
             <input class="input form-control mx-auto w-auto" id="account-confirmation" name="account-confirmation" placeholder="Retype New Password" type="password">
         </div>
         <button class="mb-4 button is-success" type="submit">Submit</button>
-    </form>
-    <h2 class="has-text-weight-bold">Edit Saved Patterns</h2>
+        <h2 class="has-text-weight-bold">Edit Saved Patterns</h2>
         <ul>
         </ul>
+    </form>
     <button class="button is-danger">Delete Account</button>
 </div>
 {% endblock %}

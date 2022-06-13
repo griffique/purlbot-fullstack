@@ -52,6 +52,18 @@ def userCheck(email):
         temp.append(match)
     return temp
 
+# put request
+
+def updateUser(email, newPassword):
+    result = users.replace_one(
+        {"email": session["user_email"]},
+        {
+            "email" : email,
+            "password" : generate_password_hash(newPassword)
+        }
+    )
+    print("Putting")
+
 
 # add a new pattern - must be added to the front end with API
 def addPattern(gauge, type, nickname):
@@ -74,7 +86,6 @@ class Patterns(Resource):
                 "type": savedPattern["type"],
                 "nickname": savedPattern["nickname"],
             })
-        print(temp)
         return temp
     def post(pattern):
         parser = reqparse.RequestParser()  # initialize parser
@@ -104,9 +115,38 @@ def logout():
     # Redirect user to login form
     return redirect("/login")
 
-@app.route("/account")
+@app.route("/account", methods=["GET", "POST"])
 def account():
-    return render_template('account.html')
+    print(request.method)
+    if request.method == "POST":
+
+        email = request.form.get("account-email")
+        oldPassword = request.form.get("account-password")
+        newPassword = request.form.get("account-new-password")
+        confirmation = request.form.get("account-confirmation")
+
+        if not email:
+            return oops("Must provide email")
+
+        elif not password:
+            return oops("Must provide password")
+
+        elif not newPassword:
+            return oops("Must provide new password")
+        
+        results = userCheck(session["user_email"])
+        if not check_password_hash(results[0]["password"], oldPassword):
+            return oops("Invalid email and/or password")
+
+        elif newPassword != confirmation:
+            return oops("Passwords do not match.")
+
+        else:
+            updateUser(email, newPassword)
+            return render_template('success.html', message="Your account has been updated.")
+            session["user_email"] = email
+    else:
+        return render_template('account.html', userEmail= session["user_email"])
 
 @app.route("/forgot")
 def forgot():
@@ -121,8 +161,8 @@ def oops(message):
     return render_template('oops.html', error=message)
 
 @app.route("/success")
-def success():
-    return render_template('success.html')
+def success(message):
+    return render_template('success.html', message=message)
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
