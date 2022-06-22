@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Delete Account
+{% endblock %}
+
+{% block main %}
+<div class="box has-text-centered">
+    <form  action="/delete" method="POST" class="delete-form">
+        <h1 class="bot-title-small">Are you sure you wish to delete your account? <br/>This action cannot be undone.</h1>
+        <div>
+            <input name="confirm-delete" type="checkbox" class="mt-6" id="confirm-delete" name="confirm-delete" /> 
+            <label for="confirm-delete">Yes, I am sure.</label>
+        </div>
+        <button type="submit" class="button is-danger mt-4">Delete My Account</button>
+    </form>
+</div>
+{% endblock %}

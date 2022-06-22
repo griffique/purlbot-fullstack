@@ -63,6 +63,11 @@ navbar ul {
     margin: 0 auto 24px;
 }
 
+.delete-form {
+    display: flex;
+    flex-direction: column;
+}
+
 .guest-link {
     font-size: 16px;
 }

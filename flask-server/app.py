@@ -44,6 +44,12 @@ def addUser(password, email):
         "email" : email
     })
 
+# add a new user
+def deleteUser():
+    users.delete_one({
+        "email" : session["user_email"]
+    })
+
 # check for existing user
 def userCheck(email):
     temp = []
@@ -62,7 +68,6 @@ def updateUser(email, newPassword):
             "password" : generate_password_hash(newPassword)
         }
     )
-    print("Putting")
 
 
 # add a new pattern - must be added to the front end with API
@@ -117,7 +122,6 @@ def logout():
 
 @app.route("/account", methods=["GET", "POST"])
 def account():
-    print(request.method)
     if request.method == "POST":
 
         email = request.form.get("account-email")
@@ -147,6 +151,18 @@ def account():
             session["user_email"] = email
     else:
         return render_template('account.html', userEmail= session["user_email"])
+
+@app.route("/delete", methods=["GET", "POST"])
+def delete():
+    if request.method == "POST":
+        confirmation = request.form.get("confirm-delete")
+        if confirmation == "on":
+            deleteUser()
+            return render_template('success.html', message="Your account has been deleted.")
+        else:
+            return render_template('oops.html', error="Account not deleted. Please check the confirmation box and retry.")
+    else:
+        return render_template('delete.html')
 
 @app.route("/forgot")
 def forgot():
