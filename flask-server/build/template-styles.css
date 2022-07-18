@@ -34,6 +34,9 @@ navbar ul {
     list-style: none;
 }
 
+td {
+    vertical-align: middle !important;
+}
 .bot-title {
     color: #7209B7;
     font-size: 64px;

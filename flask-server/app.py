@@ -1,6 +1,7 @@
 from flask import (Flask,redirect, render_template, request, send_from_directory, session)
 from flask_restful import Resource, Api, reqparse
 import datetime
+from bson.objectid import ObjectId
 from werkzeug.security import check_password_hash, generate_password_hash
 from pymongo import MongoClient
 from email_validator import validate_email, EmailNotValidError
@@ -79,6 +80,24 @@ def addPattern(gauge, type, nickname):
         "nickname" : nickname,
     })
 
+def deletePattern(patternId):
+    patterns.delete_one({
+        "_id" : ObjectId(patternId)
+    })
+
+def getPatterns():
+    temp = []
+    matches = patterns.find({"userId": session["user_email"]})
+    for savedPattern in matches:
+        temp.append({
+            "gauge": savedPattern["gauge"],
+            "type": savedPattern["type"],
+            "nickname": savedPattern["nickname"],
+            "id": savedPattern["_id"]
+        })
+    print(temp)
+    return temp
+
 #api setup for pattern CRUD
 class Patterns(Resource):
     # methods go here
@@ -90,6 +109,7 @@ class Patterns(Resource):
                 "gauge": savedPattern["gauge"],
                 "type": savedPattern["type"],
                 "nickname": savedPattern["nickname"],
+                "id": savedPattern["_id"]
             })
         return temp
     def post(pattern):
@@ -167,6 +187,17 @@ def delete():
 @app.route("/forgot")
 def forgot():
     return render_template('forgot.html')
+
+@app.route("/saved-patterns", methods=["GET","POST"])
+def savedPatterns():
+    if request.method == "GET":
+        foundPatterns = getPatterns()
+        return render_template('saved-patterns.html', foundPatterns=foundPatterns)
+    elif request.method == "POST":
+        patternId = request.form.get("pattern-id")
+        deletePattern(patternId)
+        foundPatterns = getPatterns()
+        return render_template('saved-patterns.html', foundPatterns=foundPatterns)
 
 @app.route("/reset")
 def reset():
