@@ -73,12 +73,16 @@ def updateUser(email, newPassword):
 
 # add a new pattern - must be added to the front end with API
 def addPattern(gauge, type, nickname):
-    patterns.insert_one ({
-        "userId": session["user_email"],
-        "gauge" : gauge,
-        "type" : type,
-        "nickname" : nickname,
-    })
+    if session:
+        patterns.insert_one ({
+            "userId": session["user_email"],
+            "gauge" : gauge,
+            "type" : type,
+            "nickname" : nickname,
+        })
+    else: 
+        return render_template('oops.html', error="Please register and/or log in to save patterns.")
+
 
 def deletePattern(patternId):
     patterns.delete_one({
@@ -112,7 +116,9 @@ class Patterns(Resource):
                 "id": savedPattern["_id"]
             })
         return temp
+
     def post(pattern):
+        print(session)
         parser = reqparse.RequestParser()  # initialize parser
 
         parser.add_argument('gauge', required=True)  # add args
@@ -123,6 +129,7 @@ class Patterns(Resource):
 
         addPattern(args['gauge'], args['type'], args['nickname'])
         return args, 200
+            
 
 api.add_resource(Patterns, '/patterns')
 
@@ -170,7 +177,10 @@ def account():
             return render_template('success.html', message="Your account has been updated.")
             session["user_email"] = email
     else:
-        return render_template('account.html', userEmail= session["user_email"])
+        if session:
+            return render_template('account.html', userEmail= session["user_email"])
+        else:
+            return render_template('oops.html', error="Please register and/or log in to see your account details.")
 
 @app.route("/delete", methods=["GET", "POST"])
 def delete():
