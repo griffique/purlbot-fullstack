@@ -126,9 +126,11 @@ class Patterns(Resource):
         parser.add_argument('nickname', required=True)
         
         args = parser.parse_args()  # parse arguments to dictionary
-
-        addPattern(args['gauge'], args['type'], args['nickname'])
-        return args, 200
+        if session["user_email"]:
+            addPattern(args['gauge'], args['type'], args['nickname'])
+            return args, 200
+        else: 
+            return oops("Please log in to save your pattern.")
             
 
 api.add_resource(Patterns, '/patterns')
