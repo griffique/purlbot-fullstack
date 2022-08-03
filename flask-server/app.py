@@ -19,18 +19,6 @@ app.config['SESSION_TYPE'] = 'filesystem'
 # Ensure templates are auto-reloaded
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 
-
-# register for site (X)
-# login with credentials (X)
-# logout (X)
-# api endpoint for pattern retrieval (X)
-# api endpoint for pattern save (X)
-# frontend design for save/retrieve
-# serve react app from flask
-# save pattern fn
-# retrieve patterns fn
-
-
 # connect to MongoDB and define tables
 cluster = MongoClient(url)
 db=cluster["purlbot"]
@@ -45,7 +33,7 @@ def addUser(password, email):
         "email" : email
     })
 
-# add a new user
+# delete a user
 def deleteUser():
     users.delete_one({
         "email" : session["user_email"]
@@ -59,8 +47,7 @@ def userCheck(email):
         temp.append(match)
     return temp
 
-# put request
-
+# put request for updating user 
 def updateUser(email, newPassword):
     result = users.replace_one(
         {"email": session["user_email"]},
@@ -71,7 +58,7 @@ def updateUser(email, newPassword):
     )
 
 
-# add a new pattern - must be added to the front end with API
+# add a new pattern
 def addPattern(gauge, type, nickname):
     if session:
         patterns.insert_one ({
@@ -82,7 +69,6 @@ def addPattern(gauge, type, nickname):
         })
     else: 
         return render_template('oops.html', error="Please register and/or log in to save patterns.")
-
 
 def deletePattern(patternId):
     patterns.delete_one({
@@ -202,12 +188,12 @@ def forgot():
 
 @app.route("/saved-patterns", methods=["GET","POST"])
 def savedPatterns():
-    if request.method == "GET":
-        foundPatterns = getPatterns()
-        return render_template('saved-patterns.html', foundPatterns=foundPatterns)
-    elif request.method == "POST":
+    if request.method == "POST":
         patternId = request.form.get("pattern-id")
         deletePattern(patternId)
+        foundPatterns = getPatterns()
+        return render_template('saved-patterns.html', foundPatterns=foundPatterns)
+    else:     
         foundPatterns = getPatterns()
         return render_template('saved-patterns.html', foundPatterns=foundPatterns)
 
