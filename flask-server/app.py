@@ -1,5 +1,6 @@
 from flask import (Flask,redirect, render_template, request, send_from_directory, session)
 from flask_restful import Resource, Api, reqparse
+from flask_mail import (Mail, Message)
 import datetime
 from bson.objectid import ObjectId
 from werkzeug.security import check_password_hash, generate_password_hash
@@ -9,12 +10,35 @@ from decouple import config
 
 key = config('key',default='')
 password = config('password',default='')
+emailpass = config('emailpass', default='')
+
 url = f"mongodb+srv://quinn_griff:{password}@cluster0.std9b.mongodb.net/purlbot?retryWrites=true&w=majority"
 
 app = Flask("__app__", static_url_path='', static_folder='build')
 api = Api(app)
 app.config.update(SECRET_KEY=key)
 app.config['SESSION_TYPE'] = 'filesystem'
+
+# email setup for password resest
+
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 465
+app.config['MAIL_USE_SSL'] = True
+app.config['MAIL_USERNAME'] = "quinneringriffin@gmail.com"
+app.config['MAIL_PASSWORD'] = emailpass
+mail = Mail(app)
+
+
+def sendPassReset():
+    with app.app_context():
+        msg = Message()
+        msg.subject = "Purlbot Password Reset"
+        msg.recipients = ['qgriffin@s4netquest.com']
+        msg.sender = 'quinneringriffin@gmail.com'
+        msg.html="<p>We received a request to reset the password for your Purlbot account. To reset your password, click the link below.</p><a href=\"http://www.quinneringriffin.com\">Reset Password</a>"
+        mail.send(msg)
+
+sendPassReset()
 
 # Ensure templates are auto-reloaded
 app.config["TEMPLATES_AUTO_RELOAD"] = True
