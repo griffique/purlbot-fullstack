@@ -29,16 +29,18 @@ app.config['MAIL_PASSWORD'] = emailpass
 mail = Mail(app)
 
 
-def sendPassReset():
+def sendPassReset(email):
     with app.app_context():
         msg = Message()
         msg.subject = "Purlbot Password Reset"
-        msg.recipients = ['qgriffin@s4netquest.com']
+        msg.recipients = [email]
         msg.sender = 'quinneringriffin@gmail.com'
-        msg.html="<p>We received a request to reset the password for your Purlbot account. To reset your password, click the link below.</p><a href=\"http://www.quinneringriffin.com\">Reset Password</a>"
-        mail.send(msg)
-
-sendPassReset()
+        if len(userCheck(email)) > 0:
+            msg.html= render_template('forgot_email.html')
+            mail.send(msg)
+        else:
+            msg.html= render_template('forgot_email_unreg.html')
+            mail.send(msg)
 
 # Ensure templates are auto-reloaded
 app.config["TEMPLATES_AUTO_RELOAD"] = True
@@ -206,9 +208,14 @@ def delete():
     else:
         return render_template('delete.html')
 
-@app.route("/forgot")
+@app.route("/forgot", methods=["GET", "POST"])
 def forgot():
-    return render_template('forgot.html')
+    if request.method == "POST":
+        userEmail = request.form.get("email-forgot-password")
+        sendPassReset(userEmail)
+        return render_template ('success.html', message="A password reset email has been sent. If you do not receive it soon, please check your spam folder or try resending.")
+    else:
+        return render_template('forgot.html')
 
 @app.route("/saved-patterns", methods=["GET","POST"])
 def savedPatterns():
