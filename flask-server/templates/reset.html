@@ -7,7 +7,7 @@
 {% block main %}
 <div class="box mt-6 p-4 has-text-centered">
     <h1 class="mb-4 mt-4"><span class="purl-title">Purl</span><span class="bot-title">Bot</span></h1>
-    <form action="/login" method="post" class="form">
+    <form action="/reset/{{ token }}" method="post" class="form">
         <div class="mb-4">
             <input class="input form-control mx-auto w-auto" id="reset-password" name="reset-password" placeholder="New Password" type="password">
         </div>

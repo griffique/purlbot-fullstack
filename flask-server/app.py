@@ -1,6 +1,8 @@
 from flask import (Flask,redirect, render_template, request, send_from_directory, session)
 from flask_restful import Resource, Api, reqparse
+import jwt
 from flask_mail import (Mail, Message)
+from time import time
 import datetime
 from bson.objectid import ObjectId
 from werkzeug.security import check_password_hash, generate_password_hash
@@ -11,10 +13,12 @@ from decouple import config
 key = config('key',default='')
 password = config('password',default='')
 emailpass = config('emailpass', default='')
+base_email_url = "http://127.0.0.1:5000/reset/"
+
 
 url = f"mongodb+srv://quinn_griff:{password}@cluster0.std9b.mongodb.net/purlbot?retryWrites=true&w=majority"
-
 app = Flask("__app__", static_url_path='', static_folder='build')
+
 api = Api(app)
 app.config.update(SECRET_KEY=key)
 app.config['SESSION_TYPE'] = 'filesystem'
@@ -28,6 +32,21 @@ app.config['MAIL_USERNAME'] = "quinneringriffin@gmail.com"
 app.config['MAIL_PASSWORD'] = emailpass
 mail = Mail(app)
 
+# token setup for password reset
+
+def get_reset_password_token(email, expires_in=600):
+        return jwt.encode(
+            {'reset_password': email, 'exp': time() + expires_in},
+            app.config['SECRET_KEY'], algorithm='HS256')
+
+    
+def verify_reset_password_token(token):
+    try:
+        decodedEmail = jwt.decode(token, app.config['SECRET_KEY'],
+                        algorithms=['HS256'])['reset_password']
+    except:
+        return
+    return decodedEmail
 
 def sendPassReset(email):
     with app.app_context():
@@ -36,7 +55,11 @@ def sendPassReset(email):
         msg.recipients = [email]
         msg.sender = 'quinneringriffin@gmail.com'
         if len(userCheck(email)) > 0:
-            msg.html= render_template('forgot_email.html')
+            expires = datetime.timedelta(hours=24)
+            token = get_reset_password_token(email)
+            link = base_email_url + token
+            print(link)
+            msg.html= render_template('forgot_email.html', link=link)
             mail.send(msg)
         else:
             msg.html= render_template('forgot_email_unreg.html')
@@ -76,7 +99,7 @@ def userCheck(email):
 # put request for updating user 
 def updateUser(email, newPassword):
     result = users.replace_one(
-        {"email": session["user_email"]},
+        {"email": email},
         {
             "email" : email,
             "password" : generate_password_hash(newPassword)
@@ -187,7 +210,7 @@ def account():
             return oops("Passwords do not match.")
 
         else:
-            updateUser(email, newPassword)
+            updateUser(session["user_email"], newPassword)
             return render_template('success.html', message="Your account has been updated.")
             session["user_email"] = email
     else:
@@ -217,6 +240,34 @@ def forgot():
     else:
         return render_template('forgot.html')
 
+@app.route("/reset/<token>", methods=["GET","POST"])
+def reset(token):
+    if request.method == "POST":
+        password = request.form.get("reset-password")
+        confirmation = request.form.get("reset-confirmation")
+        
+        validatedUser = verify_reset_password_token(token)
+        print(validatedUser)
+
+        if not validatedUser:
+            return render_template('oops.html', error="Sorry, you are not authorized to reset your password with this link.")
+
+        if not password:
+            return oops("Must provide password.")
+        
+        elif not confirmation:
+            return oops("Must provide confirmation of new password.")
+
+        elif password != confirmation:
+            return oops("Passwords do not match.")
+
+        else:
+            updateUser(validatedUser, password)
+            return render_template('success.html', message="Your password has been updated. Please log in.")
+    else:
+        return render_template('reset.html', token=token)
+
+
 @app.route("/saved-patterns", methods=["GET","POST"])
 def savedPatterns():
     if request.method == "POST":
@@ -227,10 +278,6 @@ def savedPatterns():
     else:     
         foundPatterns = getPatterns()
         return render_template('saved-patterns.html', foundPatterns=foundPatterns)
-
-@app.route("/reset")
-def reset():
-    return render_template('reset.html')
 
 @app.route("/oops")
 def oops(message):
