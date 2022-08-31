@@ -13,7 +13,7 @@ from decouple import config
 key = config('key',default='')
 password = config('password',default='')
 emailpass = config('emailpass', default='')
-base_email_url = "http://127.0.0.1:5000/reset/"
+base_email_url = "https://purlbot-app.herokuapp.com/reset/"
 
 
 url = f"mongodb+srv://quinn_griff:{password}@cluster0.std9b.mongodb.net/purlbot?retryWrites=true&w=majority"
