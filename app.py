@@ -344,6 +344,7 @@ def login():
     else:
         return render_template('login.html')
 
+
 if __name__ == '__main__':
     app.run(debug=True)
 app.config['EXPLAIN_TEMPLATE_LOADING'] = True
