@@ -5,24 +5,24 @@
 {% endblock %}
 
 {% block main %}
-<div class="box mt-6 p-4 has-text-centered">
+<div class="box mt-6 p-4 text-center">
     <h1 class="mb-4 mt-4 bot-title"><span class="bot-title"> Edit Account Info</span></h1>
-    <a class="button is-info mb-5 mr-5" href="/saved-patterns">Edit Saved Patterns</a>
-    <a class="button is-danger mb-5" href="/delete">Delete Account</a>
-    <form action="/account" method="post" class="form">
+    <a class="btn btn-info mb-5 mr-5" href="/saved-patterns">Edit Saved Patterns</a>
+    <a class="btn btn-danger mb-5" href="/delete">Delete Account</a>
+    <form action="/account" method="post" class="form py-form text-center">
         <div class="mb-3">
-            <input autocomplete="off" autofocus class="input form-control mx-auto w-auto" id="account-email" name="account-email" value={{userEmail}} type="text">
+            <input autocomplete="off" autofocus class="input form-control w-auto" id="account-email" name="account-email" value={{userEmail}} type="text">
         </div>
         <div class="mb-4">
-            <input class="input form-control mx-auto w-auto" id="account-password" name="account-password" placeholder="Current Password" type="password">
+            <input class="input form-control w-auto" id="account-password" name="account-password" placeholder="Current Password" type="password">
         </div>
         <div class="mb-4">
-            <input class="input form-control mx-auto w-auto" id="account-new-password" name="account-new-password" placeholder="New Password" type="password">
+            <input class="input form-control w-auto" id="account-new-password" name="account-new-password" placeholder="New Password" type="password">
         </div>
         <div class="mb-4">
-            <input class="input form-control mx-auto w-auto" id="account-confirmation" name="account-confirmation" placeholder="Retype New Password" type="password">
+            <input class="input form-control w-auto" id="account-confirmation" name="account-confirmation" placeholder="Retype New Password" type="password">
         </div>
-        <button class="mb-4 mt-4 button is-success" type="submit">Submit</button>
+        <button class="mb-4 mt-4 btn btn-success" type="submit">Submit</button>
         <ul>
         </ul>
     </form>

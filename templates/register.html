@@ -5,9 +5,9 @@
 {% endblock %}
 
 {% block main %}
-    <div class="box mt-6 p-6 has-text-centered">
+    <div class="box mt-6 p-6 text-center">
         <form action="/register" method="post">
-            <h1 class="has-text-weight-bold">Register for</h1>
+            <h1 class="font-weight-bold register">Register for</h1>
             <h1 class="mb-4"><span class="purl-title">Purl</span><span class="bot-title">Bot</span></h1>
             <div class="mb-3">
                 <input class="input form-control mx-auto w-auto" id="register-email" name="register-email" placeholder="Enter email" type="text">
@@ -15,10 +15,10 @@
             <div class="mb-3">
                 <input class="input form-control mx-auto w-auto" id="register-password" name="register-password" placeholder="Enter a password" type="password">
             </div>
-            <div class="mb-6">
+            <div class="mb-5">
                 <input class="input form-control mx-auto w-auto" id="register-confirmation" name="register-confirmation" placeholder="Re-enter password" type="password">
             </div>
-            <button class="button is-primary" type="submit">Submit</button>
+            <button class="btn btn-primary" type="submit">Submit</button>
         </form>
     </div>
     {% endblock %}

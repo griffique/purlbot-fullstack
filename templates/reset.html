@@ -5,16 +5,16 @@
 {% endblock %}
 
 {% block main %}
-<div class="box mt-6 p-4 has-text-centered">
+<div class="box mt-6 p-4 text-center">
     <h1 class="mb-4 mt-4"><span class="purl-title">Purl</span><span class="bot-title">Bot</span></h1>
-    <form action="/reset/{{ token }}" method="post" class="form">
+    <form action="/reset/{{ token }}" method="post" class="form py-form">
         <div class="mb-4">
             <input class="input form-control mx-auto w-auto" id="reset-password" name="reset-password" placeholder="New Password" type="password">
         </div>
         <div class="mb-4">
             <input class="input form-control mx-auto w-auto" id="reset-confirmation" name="reset-confirmation" placeholder="Retype New Password" type="password">
         </div>
-        <button class="mb-4 button is-success" type="submit">Submit</button>
+        <button class="mb-4 btn btn-success" type="submit">Submit</button>
     </form>
 </div>
 {% endblock %}

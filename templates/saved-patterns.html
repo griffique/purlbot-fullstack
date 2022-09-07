@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block main %}
-<div class="box has-text-centered">
+<div class="box text-center mb-4">
     <h1 class="bot-title mb-4">Saved Patterns</h1>
     <table class="table m-auto is-striped is-bordered">
         <tr class="is-size-5">
@@ -18,7 +18,7 @@
         <tr>
             <td>
                 <form method="post" action="/saved-patterns">
-                    <button class="button is-danger is-small has-text-weight-bold" type="submit">X</button>
+                    <button class="btn btn-danger btn-small has-text-weight-bold" type="submit">X</button>
                     <input type="hidden" name="pattern-id" value="{{pattern.id}}"></input>
                 </form>
             </td>
