@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/static/css/main.bbc00967.chunk.css",
-    "main.js": "/static/js/main.295827e3.chunk.js",
-    "main.js.map": "/static/js/main.295827e3.chunk.js.map",
+    "main.js": "/static/js/main.4acd9b04.chunk.js",
+    "main.js.map": "/static/js/main.4acd9b04.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.79be6676.js",
     "runtime-main.js.map": "/static/js/runtime-main.79be6676.js.map",
     "static/js/2.bfbb75e9.chunk.js": "/static/js/2.bfbb75e9.chunk.js",
@@ -11,12 +11,15 @@
     "static/js/3.992d5d1e.chunk.js.map": "/static/js/3.992d5d1e.chunk.js.map",
     "index.html": "/index.html",
     "static/css/main.bbc00967.chunk.css.map": "/static/css/main.bbc00967.chunk.css.map",
-    "static/js/2.bfbb75e9.chunk.js.LICENSE.txt": "/static/js/2.bfbb75e9.chunk.js.LICENSE.txt"
+    "static/js/2.bfbb75e9.chunk.js.LICENSE.txt": "/static/js/2.bfbb75e9.chunk.js.LICENSE.txt",
+    "static/media/double-moss.304d3900.jpg": "/static/media/double-moss.304d3900.jpg",
+    "static/media/star.57852589.jpg": "/static/media/star.57852589.jpg",
+    "static/media/zigzag.6843e31a.jpg": "/static/media/zigzag.6843e31a.jpg"
   },
   "entrypoints": [
     "static/js/runtime-main.79be6676.js",
     "static/js/2.bfbb75e9.chunk.js",
     "static/css/main.bbc00967.chunk.css",
-    "static/js/main.295827e3.chunk.js"
+    "static/js/main.4acd9b04.chunk.js"
   ]
 }
