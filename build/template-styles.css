@@ -19,19 +19,6 @@ body, html {
     font-family: 'Pacifico', cursive;
 }
 
-.bot-title-small {
-    color: #7209B7;
-    font-size: 24px;
-    font-family: 'Share Tech Mono', monospace;
-    font-weight: bold;
-}
-
-.purl-title-small {
-    color: #3A0CA3;
-    font-size: 24px;
-    font-family: 'Pacifico', cursive;
-}
-
 /*CSS media queries*/
 @media only screen and (max-width: 600px) {
     .box {
