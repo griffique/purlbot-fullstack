@@ -1,0 +1,31 @@
+body, html {
+    background-color: blueviolet;
+    font-family: "Share Tech Mono", monospace;
+    font-size: 20px;
+    height: 100%;
+    width: 100%;
+}
+
+.bot-title {
+    color: #7209B7;
+    font-size: 64px;
+    font-family: 'Share Tech Mono', monospace;
+    font-weight: bold;
+}
+
+.purl-title {
+    color: #3A0CA3;
+    font-size: 64px;
+    font-family: 'Pacifico', cursive;
+}
+
+/*CSS media queries*/
+@media only screen and (max-width: 600px) {
+    .box {
+        max-width: 80%;
+    }
+    .bot-title, .purl-title {
+        font-size: 32px;
+    }
+  }
+  
